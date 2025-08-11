@@ -132,3 +132,19 @@
         * カレントパスの状態からリンク表示を動的変更
 
 ### Setting Up Your Database
+* vercelアカウント：既存
+* Storage Provider: Neon
+* .env.localをシークレット解除し、プロジェクトの.envにコピー
+    * .gitignoreに含めるように注意
+* localhost:3000/seedにアクセスし、以下の正常応答を待つ
+    ```
+    {"message":"Database seeded successfully"}
+    ```
+
+* シーディング確認
+    * nextjs-dashboard/app/seed/route.tsを編集
+    * http://localhost:3000/queryにアクセスし、以下の応答を待つ
+
+        ```
+        [{"amount":666,"name":"Evil Rabbit"}]
+        ```
