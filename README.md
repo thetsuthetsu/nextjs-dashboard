@@ -148,3 +148,21 @@
         ```
         [{"amount":666,"name":"Evil Rabbit"}]
         ```
+
+### Fetching Data
+* APIs
+* React Server Components (default)
+* SQL
+    * app/lib/data.ts
+
+* Request Waterfalls
+    ```
+    const revenue = await fetchRevenue();
+    const latestInvoices = await fetchLatestInvoices();
+    const {
+        numberOfInvoices,
+        numberOfCustomers,
+        totalPaidInvoices,
+        totalPendingInvoices,
+    } = await fetchCardData();
+    ```
