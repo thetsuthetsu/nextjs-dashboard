@@ -166,3 +166,27 @@
         totalPendingInvoices,
     } = await fetchCardData();
     ```
+
+### Static and Dynamic Rendering
+* static rendering
+    * データの取得とレンダリングはビルド時 (デプロイ時) またはデータの再検証時にサーバー上で行われます
+    * パフォーマンス、SEOで有利
+* dynamic redering
+    * コンテンツはリクエスト時（ユーザーがページにアクセスした時）に各ユーザーのサーバー上でレンダリングされます
+    * リアルタイムデータ、ユーザ固有データの表示
+* 現時点でdashboardはdynamic rendering
+    * アプリケーションの速度は、最も遅いデータ フェッチと同じになります。
+
+## Streaming
+* チャンク：段階的ストリーミングを行うのコンテンツブロックの単位
+* ストリーミングの２方法
+    1. pageレベルでloading.tsxファイルを利用
+    2. componentレベルで、より細かくReact Suspense（<Suspense>）を定義
+* スケルトン
+    * nextjs-dashboard/app/ui/skeletons.tsx
+    * loading.tsxから静的にロードされる。
+* root group
+    * /dashboard/loading.tsxは、子フォルダ invoices/page.tsx, customers/page.tsxにも影響を与える。
+    * /dashboard/(overview)フォルダを作成し、loading.tsx, page.tsxを移動する。
+
+* Streaming Component
