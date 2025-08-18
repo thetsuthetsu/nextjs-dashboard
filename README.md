@@ -189,4 +189,27 @@
     * /dashboard/loading.tsxは、子フォルダ invoices/page.tsx, customers/page.tsxにも影響を与える。
     * /dashboard/(overview)フォルダを作成し、loading.tsx, page.tsxを移動する。
 
-* Streaming Component
+## Pertial PreRendering (PPR)
+* experimental feature（https://nextjs.org/docs/app/getting-started/partial-prerendering?utm_source=chatgpt.com）
+
+## Adding Search and Pagination
+* URL検索パラメータを使う利点
+    * ブックマークおよび共有可能なURL 
+    * サーバー側レンダリングが容易になる
+    * 分析と追跡: URLに検索クエリとフィルターを直接含めることで、追加のクライアント側ロジックを必要とせずにユーザーの行動を追跡しやすくなります。
+1. Capture the user's input.
+    * /app/ui/search.tsx
+    * use client
+        * hookを利用：useSearchParams, usePathname, useRouter
+        * Web APIを利用：URLSearchParams
+2. Update the URL with the search params
+    * usePathname + URLSearchParam(searchParams)
+    * replace(usePathname + input query) 
+        * ex: /dashboard/invoices?query=lee 
+3. Keeping the URL and input in sync
+4. Updateing the table
+
+* Debouncing: 関数の実行頻度を制限するプログラミング手法
+    * use-debounce
+
+* Pagination
