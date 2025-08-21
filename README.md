@@ -213,3 +213,59 @@
     * use-debounce
 
 * Pagination
+    * nextjs-dashboard/app/ui/invoices/pagination.tsx
+        * Link hrefによるURL遷移でページ移動
+
+## Mutating Data
+### Server Actions
+    * サーバー上で直接非同期コードを実行できます
+    * Progressive Enhancement
+        * forms work even if JavaScript has not yet loaded on the client. 
+1. Create a new route and from
+    * invoices/create/page.tsx
+2. Create a Server Action
+    * nextjs-dashboard/app/lib/actions.ts
+        * use server
+            * you mark all the exported functions within the file as Server Actions. 
+            * These server functions can then be imported and used in Client and Server components. 
+            * Any functions included in this file that are not used will be automatically removed from the final application bundle.
+        * You can also write Server Actions directly inside Server Components by adding "use server" inside the action. We recommend having a separate file for your actions.
+    * nextjs-dashboard/app/ui/invoices/create-form.tsx
+        * form action={createInvoice}
+        * 通常、HTMLではfrom属性URLによりAPIエンドポイントを渡すが、サーバーアクションはバックグラウンドでPOSTAPIエンドポイントを作成します。そのため、サーバーアクションを使用する際にAPIエンドポイントを手動で作成する必要はありません。
+3. Extract the data from formData
+    * nextjs-dashboard/app/ui/invoices/create-form.tsx
+        * form.get("form-key")
+4. Validate and prepare the data
+    * [data definitions] nextjs-dashboard/app/lib/definitions.ts
+    * TypeScriptによる型検証
+        * Zod (https://zod.dev/)
+5. Inserting the data into your database
+    * createInvoice(actions.ts)からsql実行
+6. Revalidate and redirect
+    * client-side router cache
+        * ルートセグメントをユーザーのブラウザに一定期間保存するクライアント側ルーターキャッシュがあります。
+        * revalidatePath: invlicesルートで、表示データを更新するためキャッシュをクリアし、新規リクエストがサーバに要求されるようにする。
+    * redirect
+        * invoices登録後、/dashboard/invoicesに強制遷移する。
+            * clientコンポーネント：　replace(useRouter)
+            * serverアクション、serverコンポーネント：　redirect
+
+### Updating a invoice
+1. Create a new dynamic route segment with the invoice id.
+    * Dynamic Route Segments
+        * invoices/[id]/edit/page.tsx
+        * URL: /dashboard/invoices/${id}/edit
+    * UpdateInvoice (nextjs-dashboard/app/ui/invoices/buttons.tsx)
+2. Read the invoice id from page parama
+    * nextjs-dashboard/app/dashboard/invoices/[id]/edit/page.tsx
+3. Fetch the specific invoice
+    * URL include UUID
+        * ex: http://localhost:3000/dashboard/invoices/eda5555d-6bfb-4242-bac8-746e6a6c2095/edit
+
+4. Pass the id to the Server Action
+    * Using JS bind to pass id
+        ```
+        const updateInvoiceWithId = updateInvoice.bind(null, invoice.id);
+        return <form action={updateInvoiceWithId}>
+        ```
