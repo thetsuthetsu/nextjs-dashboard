@@ -257,6 +257,7 @@
         * invoices/[id]/edit/page.tsx
         * URL: /dashboard/invoices/${id}/edit
     * UpdateInvoice (nextjs-dashboard/app/ui/invoices/buttons.tsx)
+
 2. Read the invoice id from page parama
     * nextjs-dashboard/app/dashboard/invoices/[id]/edit/page.tsx
 3. Fetch the specific invoice
@@ -264,8 +265,25 @@
         * ex: http://localhost:3000/dashboard/invoices/eda5555d-6bfb-4242-bac8-746e6a6c2095/edit
 
 4. Pass the id to the Server Action
+    * EditInvoiceForm (nextjs-dashboard/app/ui/invoices/edit-form.tsx)
     * Using JS bind to pass id
+        
         ```
         const updateInvoiceWithId = updateInvoice.bind(null, invoice.id);
-        return <form action={updateInvoiceWithId}>
+
+            bind: null (this)
+                  arg0 (string: invoice.id)
+                  from (this.form)
         ```
+
+        ```
+        return <form action={updateInvoiceWithId}>
+
+        ```
+
+### Delete a invoid
+1. Pass the id to the Server Action
+    * nextjs-dashboard/app/ui/invoices/buttons.tsx
+    * 削除アイコン押下　-> 即削除
+    * 削除確認・編集画面は不要のため、Dynamic Route Segments、フェッチ、編集フォームは不要
+    
