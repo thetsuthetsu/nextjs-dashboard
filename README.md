@@ -286,4 +286,13 @@
     * nextjs-dashboard/app/ui/invoices/buttons.tsx
     * 削除アイコン押下　-> 即削除
     * 削除確認・編集画面は不要のため、Dynamic Route Segments、フェッチ、編集フォームは不要
-    
+
+## Handling Errors
+* try/catch
+    * nextjs-dashboard/app/lib/actions.ts
+* [error.tsx] nextjs-dashboard/app/dashboard/invoices/error.tsx
+    * Client Componentであること
+        * useEffectの利用に関わらず、「React Error Boundary」を利用しているため、client componentが必須。
+* 404エラーハンドリング
+    * [not-found.tsx] nextjs-dashboard/app/dashboard/invoices/[id]/edit/not-found.tsx 
+
