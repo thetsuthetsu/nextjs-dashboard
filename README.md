@@ -296,3 +296,31 @@
 * 404エラーハンドリング
     * [not-found.tsx] nextjs-dashboard/app/dashboard/invoices/[id]/edit/not-found.tsx 
 
+## Improving Accessibility
+* Using the ESLint accessibility plugin
+    * nextjs-dashboard/package.json
+        ```
+        "scripts": {
+                ・・・ snip　・・・
+            "lint": "next lint"
+        },
+        ```
+    * lint実行
+        ```
+        node ➜ /workspaces/next_app/nextjs-dashboard (main) $ pnpm lint
+
+        > @ lint /workspaces/next_app/nextjs-dashboard
+        > next lint
+
+        ./app/ui/invoices/table.tsx
+        29:23  Warning: Image elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
+        ```
+* Form validation
+    * client-side validation
+        * html: required属性
+    * server-side validation
+        * nextjs-dashboard/app/ui/invoices/create-form.tsx
+            * useActionState hookを利用
+    * edit-form.tsx
+        * customerId, statusについては変更不可なので、クライアントのエラー表示(aria-describedby)はamountのみでOK。
+            * API、クライアント改ざんに対してはserver側検証が対応。
