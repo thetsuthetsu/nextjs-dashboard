@@ -324,3 +324,47 @@
     * edit-form.tsx
         * customerId, statusについては変更不可なので、クライアントのエラー表示(aria-describedby)はamountのみでOK。
             * API、クライアント改ざんに対してはserver側検証が対応。
+
+## Adding Authentication
+* Creating the login route
+    * nextjs-dashboard/app/login/page.tsx
+    * nextjs-dashboard/app/ui/login-form.tsx
+* NextAuth.js
+    * Next.jsアプリケーションにおける認証のための統合ソリューション
+    * 2025/09/03現在、最新版はv4だが、App Rounter/Server Actions/Route Handlerを用いる場合、v5(beta)が推奨されている。
+
+        ```
+        node ➜ /workspaces/next_app/nextjs-dashboard (main) $ pnpm i next-auth@beta
+         WARN  6 deprecated subdependencies found: are-we-there-yet@2.0.0, gauge@3.0.2, glob@7.2.3, inflight@1.0.6, npmlog@5.0.1, rimraf@3.0.2
+        Already up to date
+        Progress: resolved 482, reused 441, downloaded 0, added 0, done
+        Done in 1.9s using pnpm v10.14.0
+        ```
+    * generate a secret key for your application
+        ```
+        node ➜ /workspaces/next_app/nextjs-dashboard (main) $ openssl rand -base64 32
+        S1Iv72hZfKz579K2VzZObb9IXKnOaaSHVkwdWiCHrTc=
+        ```
+        * .env
+            ```
+            AUTH_SECRET=S1Iv72hZfKz579K2VzZObb9IXKnOaaSHVkwdWiCHrTc=  
+            ```
+* Adding the pages option            
+    * NextAuthConfig: page (nextjs-dashboard/auth.config.ts)
+
+* Protecting your routes with Next.js Middleware
+    * NextAuthConfig: callbacks (nextjs-dashboard/auth.config.ts)
+
+* middleware (nextjs-dashboard/middleware.ts)
+     * initializing NextAuth.js with the authConfig object and exporting the auth property
+
+* auth.ts (nextjs-dashboard/auth.ts)
+    * Adding the Credentials provider (Username / password) 
+    * Adding the sign in functionality
+
+* credential
+    * email: user@nextmail.com
+    * pass : 123456
+
+* package.json
+    * 開始コマンドの--turbopackを外す。（原因不明）
