@@ -367,4 +367,42 @@
     * pass : 123456
 
 * package.json
-    * 開始コマンドの--turbopackを外す。（原因不明）
+    * 開始コマンドの--turbopackを外す。
+        * --turbopackにより、middlewareはEdge runtimeで動作する。
+        * 本チュートリアルは、Node runtime前提のようだ。
+            ```
+            auth.ts → Node runtime で動く（DB, bcrypt, postgres などを使える）
+            middleware.ts → Edge runtime で動く（DBには直接触れられない）
+            つまり middleware.ts から auth.ts を直接 re-export するとランタイム衝突が起こるのです。
+            ```
+        * Turbopack はまだ Next.js 15 でも β版扱い
+
+## Adding Meatadata
+* SEO向上：検索エンジンがウェブページを効果的にインデックスし、検索結果のランキングを向上させるのに役立つ
+* Open Graphのようなメタデータは、ソーシャルメディアで共有されたリンクの見栄えを改善し、ユーザーにとってコンテンツの魅力と情報価値を高めます。
+### Types of metadata
+* Title Metadata
+* Description Metadata
+* Keyword Metadata: Web ページのコンテンツに関連するキーワードが含まれており、検索エンジンがページをインデックスするのに役立ちます
+* Open Graph Metadata: ソーシャル メディア プラットフォームで共有されるときに Web ページが表示される方法(タイトル、説明、プレビュー画像)
+* Favicon Metadata
+
+### Adding Metadata
+* Config-based
+* File-based
+
+### Favicon and Open Graph image
+* nextjs-dashboard/app/favicon.ico
+    * head要素
+        ```
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="48x48">
+        ```
+* nextjs-dashboard/app/opengraph-image.png
+    * headには展開されない
+        * 「The opengraph-image file convention creates an Open Graph image for your application without needing to manually add a <meta property="og:image"> tag.」
+
+### Page title and descriptions
+* nextjs-dashboard/app/layout.tsx
+* 個別ページのカスタムメタ
+    * nextjs-dashboard/app/dashboard/invoices/page.tsx
+
